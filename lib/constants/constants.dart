@@ -12,7 +12,8 @@ class Images {
 
 class AppColors {
 
-  static const white = const Color(0xffffff);
+  static const white = const Color(0xffffffff);
+  static const background = const Color(0xfff9f9f9);
 }
 
 class Dimensions {
@@ -20,6 +21,10 @@ class Dimensions {
   static const login_form_margin = 50.0;
   static const login_form_spacing = 20.0;
   static const text_field_round_radius = 10.0;
+  static const card_round_radius = 20.0;
+  static const card_elevation = 2.0;
+  static const card_margin = 18.0;
+  static const card_padding = 5.0;
 }
 
 class Routes {

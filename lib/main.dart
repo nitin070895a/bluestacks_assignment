@@ -20,7 +20,8 @@ class GameTV extends StatelessWidget {
       title: 'Bluestacks Assignment',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        scaffoldBackgroundColor: AppColors.background
       ),
       supportedLocales: [
         Locale('en', ''),
