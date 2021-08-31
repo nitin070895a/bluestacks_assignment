@@ -2,12 +2,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../controller/home_controller.dart';
-import '../constants/constants.dart';
-import '../constants/enum.dart';
-import '../constants/strings.dart';
-import '../model/user_details.dart';
-import '../model/tournaments.dart';
+import 'home_controller.dart';
+import '../../constants/constants.dart';
+import '../../utils/enum.dart';
+import '../../constants/strings.dart';
+import '../../model/user_details.dart';
+import '../../model/tournaments.dart';
 
 class HomePage extends StatefulWidget {
 

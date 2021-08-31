@@ -5,9 +5,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'constants/constants.dart';
 import 'constants/strings.dart';
-import 'persistent/preferences.dart';
-import 'view/home_page.dart';
-import 'view/login_page.dart';
+import 'screens/home/home_page.dart';
+import 'screens/login/login_page.dart';
+import 'utils/preferences.dart';
 
 void main() {
   runApp(GameTV());

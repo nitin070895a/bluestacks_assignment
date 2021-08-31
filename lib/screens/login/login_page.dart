@@ -2,13 +2,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../controller/login_controller.dart';
-import '../constants/constants.dart';
-import '../constants/enum.dart';
-import '../constants/strings.dart';
-import '../extension.dart';
-import '../model/auth_params.dart';
-import '../persistent/preferences.dart';
+import 'login_controller.dart';
+import '../../constants/constants.dart';
+import '../../utils/enum.dart';
+import '../../constants/strings.dart';
+import '../../utils/extension.dart';
+import '../../model/auth_params.dart';
+import '../../utils/preferences.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
