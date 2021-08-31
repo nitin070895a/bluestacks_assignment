@@ -1,6 +1,6 @@
 
-import '../model/tournaments.dart';
 import '../model/user_details.dart';
+import '../model/tournaments.dart';
 import '../service/api_service.dart';
 
 class HomeController {

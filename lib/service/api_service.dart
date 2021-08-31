@@ -1,11 +1,11 @@
-
 import 'dart:convert';
 
-import 'package:Bluestacks/constants/constants.dart';
-import 'package:Bluestacks/model/tournaments.dart';
-import 'package:Bluestacks/model/user_details.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:http/http.dart' as http;
+import 'package:connectivity/connectivity.dart';
+
+import '../constants/constants.dart';
+import '../model/tournaments.dart';
+import '../model/user_details.dart';
 
 class APIService {
 

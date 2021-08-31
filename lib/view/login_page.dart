@@ -1,13 +1,14 @@
-import 'package:Bluestacks/constants/enum.dart';
-import 'package:Bluestacks/controller/login_controller.dart';
-import 'package:Bluestacks/model/auth_params.dart';
-import 'package:Bluestacks/persistent/preferences.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../extension.dart';
+import '../controller/login_controller.dart';
 import '../constants/constants.dart';
+import '../constants/enum.dart';
 import '../constants/strings.dart';
+import '../extension.dart';
+import '../model/auth_params.dart';
+import '../persistent/preferences.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);

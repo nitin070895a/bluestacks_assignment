@@ -1,13 +1,13 @@
 
-import 'package:Bluestacks/constants/constants.dart';
-import 'package:Bluestacks/constants/enum.dart';
-import 'package:Bluestacks/constants/strings.dart';
-import 'package:Bluestacks/model/user_details.dart';
-
-import '../controller/home_controller.dart';
-import '../model/tournaments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../controller/home_controller.dart';
+import '../constants/constants.dart';
+import '../constants/enum.dart';
+import '../constants/strings.dart';
+import '../model/user_details.dart';
+import '../model/tournaments.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -100,6 +100,7 @@ class _HomePageState extends State<HomePage> {
       ));
       case UIState.LOADED: return ListView.builder(
           controller: _scrollController,
+          physics: BouncingScrollPhysics(),
           itemCount: _controller.tournaments.length + 3,
           itemBuilder: (context, index) {
             if (index == 0) return _UserDetails(_controller.userDetails);

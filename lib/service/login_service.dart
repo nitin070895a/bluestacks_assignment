@@ -1,5 +1,5 @@
 
-import 'package:Bluestacks/model/auth_params.dart';
+import '../model/auth_params.dart';
 
 class LoginService {
 

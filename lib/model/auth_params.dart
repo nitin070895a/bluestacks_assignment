@@ -1,3 +1,4 @@
+
 class AuthParams {
 
   final String userName;

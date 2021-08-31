@@ -1,12 +1,12 @@
 import 'dart:ui' as ui;
 
-import 'package:Bluestacks/constants/constants.dart';
-import 'package:Bluestacks/constants/strings.dart';
-import 'package:Bluestacks/persistent/preferences.dart';
-import 'package:Bluestacks/view/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'constants/constants.dart';
+import 'constants/strings.dart';
+import 'persistent/preferences.dart';
+import 'view/home_page.dart';
 import 'view/login_page.dart';
 
 void main() {
@@ -57,6 +57,7 @@ class GameTV extends StatelessWidget {
         Routes.login : (context) => LoginPage(),
         Routes.home: (context) => HomePage()
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 }
