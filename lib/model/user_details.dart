@@ -1,4 +1,5 @@
 
+/// Data representation of user's profile
 class UserDetails {
 
   late String name;

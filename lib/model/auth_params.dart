@@ -1,4 +1,5 @@
 
+/// Authentication params to be send for loggin in
 class AuthParams {
 
   final String userName;

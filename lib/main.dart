@@ -10,55 +10,65 @@ import 'screens/login/login_page.dart';
 import 'utils/preferences.dart';
 
 void main() {
-  runApp(GameTV());
+  runApp(_GameTV());
 }
 
-class GameTV extends StatelessWidget {
+/// The Main App Widget
+class _GameTV extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
 
     return MaterialApp(
       title: 'Bluestacks Assignment',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        scaffoldBackgroundColor: AppColors.background
-      ),
-      supportedLocales: [
-        Locale('en', ''),
-        Locale('ja', ''),
-      ],
-      localizationsDelegates: [
-        AppLocalizationDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate
-      ],
-      localeResolutionCallback: (locale, supportedLocales) {
-
-        for (var supportedLocale in supportedLocales)
-          if (supportedLocale.languageCode == locale?.languageCode)
-            return supportedLocale;
-
-        return supportedLocales.first;
-      },
+      theme: _getTheme(),
+      supportedLocales: [Locale('en', ''), Locale('ja', ''),],
+      localizationsDelegates: [AppLocalizationDelegate(), GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
+      localeResolutionCallback: _localeResolutionCallback,
       locale: ui.window.locale,
-      home: FutureBuilder(
-        future: Preferences.isLoggedIn(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData) {
-            return snapshot.data ?? false ? HomePage() : LoginPage();
-          }
-          return Container();
-        },
-      ),
+      debugShowCheckedModeBanner: false,
+      home: _HomeWidget(),
       routes: {
         Routes.login : (context) => LoginPage(),
         Routes.home: (context) => HomePage()
       },
-      debugShowCheckedModeBanner: false,
+    );
+  }
+
+  /// Callback to handle locale resolution
+  Locale _localeResolutionCallback(Locale? locale, Iterable<Locale> supportedLocales) {
+    for (var supportedLocale in supportedLocales)
+      if (supportedLocale.languageCode == locale?.languageCode)
+        return supportedLocale;
+
+    return supportedLocales.first;
+  }
+
+  /// Returns customised app theme data
+  ThemeData _getTheme() {
+    return ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        scaffoldBackgroundColor: AppColors.background
     );
   }
 }
 
+/// Calculates and builds the initial page to be loaded into the app
+///
+/// If user is logged in builds [HomePage] otherwise builds [LoginPage].
+class _HomeWidget extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+   return FutureBuilder(
+     future: Preferences.isLoggedIn(),
+     builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+       if (snapshot.hasData) {
+         return snapshot.data ?? false ? HomePage() : LoginPage();
+       }
+       return Container();
+     },
+   );
+  }
+}

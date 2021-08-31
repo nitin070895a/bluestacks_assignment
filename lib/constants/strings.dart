@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+/// Skeleton of all the strings used in the app
 abstract class Languages {
 
   static Languages of (BuildContext context) {
@@ -24,6 +25,7 @@ abstract class Languages {
   String get retry;
 }
 
+/// All the app strings in English language
 class LanguageEn extends Languages {
 
   @override String get appName => 'Bluestacks Assignment';
@@ -44,6 +46,7 @@ class LanguageEn extends Languages {
   @override String get retry => 'Retry';
 }
 
+/// All the app strings in Japanese language
 class LanguageJa extends Languages {
 
   @override String get appName => 'Bluestacks Assignment';
@@ -64,6 +67,7 @@ class LanguageJa extends Languages {
   @override String get retry => 'リトライ';
 }
 
+/// Multi language support delegate
 class AppLocalizationDelegate extends LocalizationsDelegate<Languages> {
 
   @override

@@ -1,12 +1,38 @@
 
+import '../constants/constants.dart';
+
+/// Model to represent a Game Tournament
+class Tournament {
+  String? name;
+  String? coverUrl;
+  String? gameName;
+
+  Tournament({this.name, this.coverUrl, this.gameName});
+
+  Tournament.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    coverUrl = json['cover_url'];
+    gameName = json['game_name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['cover_url'] = this.coverUrl;
+    data['game_name'] = this.gameName;
+    return data;
+  }
+}
+
+/// Model representation of the data received from [ApiEndpoints.recommendedTournaments] API
 class TournamentsResponse {
   int? code;
-  Data? data;
+  _Data? data;
   bool? success;
 
   TournamentsResponse.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new _Data.fromJson(json['data']) : null;
     success = json['success'];
   }
 
@@ -21,15 +47,16 @@ class TournamentsResponse {
   }
 }
 
-class Data {
+/// Data representation for [ApiEndpoints.recommendedTournaments] response
+class _Data {
   String? cursor;
   int? tournamentCount;
   List<Tournament>? tournaments;
   bool? isLastBatch;
 
-  Data({this.cursor, this.tournamentCount, this.tournaments, this.isLastBatch});
+  _Data({this.cursor, this.tournamentCount, this.tournaments, this.isLastBatch});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  _Data.fromJson(Map<String, dynamic> json) {
     cursor = json['cursor'];
     tournamentCount = json['tournament_count'];
     if (json['tournaments'] != null) {
@@ -53,24 +80,3 @@ class Data {
   }
 }
 
-class Tournament {
-  String? name;
-  String? coverUrl;
-  String? gameName;
-
-  Tournament({this.name, this.coverUrl, this.gameName});
-
-  Tournament.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    coverUrl = json['cover_url'];
-    gameName = json['game_name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['cover_url'] = this.coverUrl;
-    data['game_name'] = this.gameName;
-    return data;
-  }
-}
