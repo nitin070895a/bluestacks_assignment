@@ -2,7 +2,6 @@ import 'package:Bluestacks/constants/enum.dart';
 import 'package:Bluestacks/controller/login_controller.dart';
 import 'package:Bluestacks/model/auth_params.dart';
 import 'package:Bluestacks/persistent/preferences.dart';
-import 'package:Bluestacks/view/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -80,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: true,
                       ),
                       SizedBox(height: Dimensions.login_form_spacing,),
-                      OutlineButton(
+                      OutlinedButton(
                         child: Text(strings.login),
                         onPressed: (_isValid && _loginState != UIState.LOADING)? onLoginPressed : null,
                       ),

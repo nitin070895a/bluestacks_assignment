@@ -9,7 +9,7 @@ class LoginService {
     _validLoginCredentials = Map();
     _validLoginCredentials!["9898989898"] = "password123";
     _validLoginCredentials!["9876543210"] = "password123";
-    _validLoginCredentials!["test"] = "test";
+    // _validLoginCredentials!["test"] = "test";
   }
 
   static Future<bool> login(AuthParams params) {

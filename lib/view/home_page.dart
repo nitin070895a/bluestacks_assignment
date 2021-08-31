@@ -33,7 +33,9 @@ class _HomePageState extends State<HomePage> {
 
   void callAPIs() async {
 
-    _state = UIState.LOADING;
+    setState(() {
+      _state = UIState.LOADING;
+    });
 
     await callTournamentsAPI();
     await _controller.getUserDetails();
@@ -88,7 +90,14 @@ class _HomePageState extends State<HomePage> {
 
       case UIState.IDLE:
       case UIState.LOADING: return Center(child: CircularProgressIndicator());
-      case UIState.ERROR: return Center(child: Text(strings.errorLoadingPage));
+      case UIState.ERROR: return Center(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(strings.errorLoadingPage, style: TextStyle(color: Colors.red),),
+          SizedBox(height: Dimensions.card_margin,),
+          OutlinedButton(onPressed: callAPIs, child: Text(strings.retry),)
+        ],
+      ));
       case UIState.LOADED: return ListView.builder(
           controller: _scrollController,
           itemCount: _controller.tournaments.length + 3,
@@ -142,7 +151,7 @@ class _UserDetails extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(userDetails?.name ?? "", style: Theme.of(context).textTheme.headline4,),
+                  Text(userDetails?.name ?? "", style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: Dimensions.font_xxlarge),),
                   SizedBox(height: 10,),
                   Container(
                       decoration: BoxDecoration(
@@ -153,14 +162,13 @@ class _UserDetails extends StatelessWidget {
                       child: Text.rich(
                         TextSpan(
                             children: [
-                              TextSpan(text: userDetails?.ratings.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.font_xlarge, color: Colors.blue)),
+                              WidgetSpan(alignment: PlaceholderAlignment.middle, child: Text(userDetails?.ratings.toString() ?? "", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.font_xlarge, color: Colors.blue))),
                               TextSpan(text: "  "),
-                              TextSpan(text: strings.eloRating)
+                              WidgetSpan(alignment: PlaceholderAlignment.middle, child: Text(strings.eloRating))
                             ]
                         ),
-                        textAlign: TextAlign.center,
                       )
-                  )
+                    ),
                 ],
               )
             ],
@@ -170,8 +178,8 @@ class _UserDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Expanded(flex: 1, child: _ScoreCard(userDetails?.tournamentsPlayed.toString() ?? "", strings.tournamentsPlayed, BorderRadius.only(topLeft: r, bottomLeft: r), Colors.orange)),
-              Expanded(flex: 1, child: _ScoreCard(userDetails?.tournamentsWon.toString() ?? "", strings.tournamentsPlayed, BorderRadius.zero, Colors.purple)),
-              Expanded(flex: 1, child: _ScoreCard("${userDetails?.winPercentage.toInt() ?? 0}%", strings.tournamentsPlayed, BorderRadius.only(topRight: r, bottomRight: r), Colors.red)),
+              Expanded(flex: 1, child: _ScoreCard(userDetails?.tournamentsWon.toString() ?? "", strings.tournamentsWon, BorderRadius.zero, Colors.purple)),
+              Expanded(flex: 1, child: _ScoreCard("${userDetails?.winPercentage.toInt() ?? 0}%", strings.winningPercentage, BorderRadius.only(topRight: r, bottomRight: r), Colors.red)),
             ],
           )
         ],
@@ -193,7 +201,7 @@ class _ScoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(15),
       margin: EdgeInsets.all(1),
       decoration: BoxDecoration(
         borderRadius: radius,
@@ -228,6 +236,7 @@ class _TournamentWidget extends StatelessWidget {
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: Dimensions.card_elevation,
+      shadowColor: Colors.black38,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Dimensions.card_round_radius)
       ),

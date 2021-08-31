@@ -21,6 +21,7 @@ abstract class Languages {
   String get winningPercentage;
   String get recommendedForYou;
   String get errorLoadingPage;
+  String get retry;
 }
 
 class LanguageEn extends Languages {
@@ -40,6 +41,7 @@ class LanguageEn extends Languages {
   @override String get winningPercentage => 'Winning percentage';
   @override String get recommendedForYou => 'Recommended for you';
   @override String get errorLoadingPage => 'Error loading page';
+  @override String get retry => 'Retry';
 }
 
 class LanguageJa extends Languages {
@@ -59,6 +61,7 @@ class LanguageJa extends Languages {
   @override String get winningPercentage => '勝率';
   @override String get recommendedForYou => 'あなたにおすすめ';
   @override String get errorLoadingPage => 'ページの読み込みエラー';
+  @override String get retry => 'リトライ';
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Languages> {
