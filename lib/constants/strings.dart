@@ -20,6 +20,7 @@ abstract class Languages {
   String get tournamentsWon;
   String get winningPercentage;
   String get recommendedForYou;
+  String get errorLoadingPage;
 }
 
 class LanguageEn extends Languages {
@@ -38,6 +39,7 @@ class LanguageEn extends Languages {
   @override String get tournamentsWon => "Tournaments won";
   @override String get winningPercentage => "Winning percentage";
   @override String get recommendedForYou => "Recommended for you";
+  @override String get errorLoadingPage => "Error loading page";
 }
 
 class LanguageJa extends Languages {
@@ -56,6 +58,7 @@ class LanguageJa extends Languages {
   @override String get tournamentsWon => "Tournaments won";
   @override String get winningPercentage => "Winning percentage";
   @override String get recommendedForYou => "Recommended for you";
+  @override String get errorLoadingPage => "Error loading page";
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Languages> {

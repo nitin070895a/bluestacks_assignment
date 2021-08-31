@@ -12,6 +12,7 @@ class HomeController {
 
   List<Tournament> get tournaments => _tournaments;
   UserDetails? get userDetails => _userDetails;
+  bool get deadEnd => _deadEnd;
 
   Future<UserDetails?> getUserDetails() async {
     _userDetails = await APIService.getUserDetails();

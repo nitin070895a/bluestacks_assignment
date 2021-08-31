@@ -1,5 +1,6 @@
 
 import 'package:Bluestacks/constants/constants.dart';
+import 'package:Bluestacks/constants/enum.dart';
 import 'package:Bluestacks/constants/strings.dart';
 import 'package:Bluestacks/model/user_details.dart';
 
@@ -18,27 +19,51 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   HomeController _controller = HomeController();
+  UIState _state = UIState.IDLE;
+  ScrollController _scrollController = ScrollController();
+  bool _isFetchingMore = false;
 
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_scrollListener);
 
     callAPIs();
   }
 
   void callAPIs() async {
 
+    _state = UIState.LOADING;
+
+    await callTournamentsAPI();
     await _controller.getUserDetails();
-    await _controller.getRecommendedTournaments();
 
     setState(() {
-
+      _state = _controller.userDetails != null ? UIState.LOADED : UIState.ERROR;
     });
+  }
+
+  Future<void> callTournamentsAPI() async {
+    await _controller.getRecommendedTournaments();
+    _isFetchingMore = false;
+  }
+
+  void _scrollListener() {
+
+    if (_scrollController.offset >= _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange && !_isFetchingMore) {
+
+      _isFetchingMore = true;
+      callTournamentsAPI().then((value) =>
+          setState(() {
+
+          })
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Languages strings = Languages.of(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -53,9 +78,20 @@ class _HomePageState extends State<HomePage> {
           onPressed: (){},
         ),
       ),
-      body: ListView.builder(
-          // reverse: true,
-          itemCount: _controller.tournaments.length + 2,
+      body: getRoot()
+    );
+  }
+
+  Widget getRoot() {
+    Languages strings = Languages.of(context);
+    switch(_state) {
+
+      case UIState.IDLE:
+      case UIState.LOADING: return Center(child: CircularProgressIndicator());
+      case UIState.ERROR: return Center(child: Text(strings.errorLoadingPage));
+      case UIState.LOADED: return ListView.builder(
+          controller: _scrollController,
+          itemCount: _controller.tournaments.length + 3,
           itemBuilder: (context, index) {
             if (index == 0) return _UserDetails(_controller.userDetails);
             if (index == 1) return Container(
@@ -68,10 +104,16 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             );
+            if (index == _controller.tournaments.length + 2) {
+              if (_controller.deadEnd) return Container();
+              else return Align(child: CircularProgressIndicator());
+            }
             return _TournamentWidget(_controller.tournaments[index-2]);
           }
-      ),
-    );
+      );
+
+      default: return Center(child: Text(strings.errorLoadingPage));
+    }
   }
 
 }

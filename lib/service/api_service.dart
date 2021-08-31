@@ -10,8 +10,9 @@ class APIService {
 
   static Future<TournamentsResponse?> getRecommendedTournaments({String? cursor}) async {
 
-    var uri = Uri.parse(ApiEndpoints.recommendedTournaments);
-    if (cursor != null) uri.queryParameters["cursor"] = cursor;
+    String endPoint = ApiEndpoints.recommendedTournaments;
+    if (cursor != null) endPoint += "&cursor=$cursor";
+    Uri uri = Uri.parse(endPoint);
 
     final response = await http.get(uri);
 
