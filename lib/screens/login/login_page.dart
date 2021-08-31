@@ -8,8 +8,9 @@ import '../../utils/enum.dart';
 import '../../constants/strings.dart';
 import '../../utils/extension.dart';
 import '../../model/auth_params.dart';
-import '../../utils/preferences.dart';
+import '../../widgets/custom_app_bar.dart';
 
+// Provides the UI for Login Page
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
 
@@ -17,32 +18,29 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+// Login Page State
 class _LoginPageState extends State<LoginPage> {
 
-  final _formKey = GlobalKey<FormState>();
-  final _userName = TextEditingController();
-  final _password = TextEditingController();
+  final _controller = LoginController(); // The Controller
 
-  final _controller = LoginController();
-  UIState _loginState = UIState.IDLE;
-  var _isValid = false;
+  final _formKey = GlobalKey<FormState>();
+  final _userName = TextEditingController();  // Controller for user name
+  final _password = TextEditingController();  // Controller for password
+
+  UIState _loginState = UIState.IDLE; // Current UI state of the page
+  var _isFormValid = false;
 
   @override
   Widget build(BuildContext context) {
     Languages strings = Languages.of(context);
     return Scaffold(
-        appBar: AppBar(
-            centerTitle: true,
-            title: Text(strings.login, style: TextStyle(color: Colors.black)),
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-        ),
+        appBar: CustomAppBar(strings.login),
         resizeToAvoidBottomInset: true,
         body: Form(
             key: _formKey,
             onChanged: (){
               setState(() {
-                _isValid = _formKey.currentState?.validate() ?? false;
+                _isFormValid = _formKey.currentState?.validate() ?? false;
               });
             },
             child: Center(
@@ -82,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(height: Dimensions.login_form_spacing,),
                       OutlinedButton(
                         child: Text(strings.login),
-                        onPressed: (_isValid && _loginState != UIState.LOADING)? onLoginPressed : null,
+                        onPressed: (_isFormValid && _loginState != UIState.LOADING)? onLoginPressed : null,
                       ),
                       Text(_loginState == UIState.ERROR ? strings.loginErrorUser : "", style: TextStyle(color: Colors.red),textAlign: TextAlign.center,),
                     ],
@@ -93,6 +91,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  /// Callback from Login button click, Calls the controller for login event
   void onLoginPressed() async {
 
     FocusManager.instance.primaryFocus?.unfocus();
@@ -108,11 +107,7 @@ class _LoginPageState extends State<LoginPage> {
       _loginState = success ? UIState.LOADED : UIState.ERROR;
     });
 
-    print('Login ${success ? "Success" : "Failed"}!');
-
-    if (success) {
-      Preferences.setLoggedIn(true);
+    if (success)
       Navigator.pushReplacementNamed(context, Routes.home);
-    }
   }
 }

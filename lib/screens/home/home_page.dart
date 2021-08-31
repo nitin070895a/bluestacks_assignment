@@ -8,6 +8,7 @@ import '../../utils/enum.dart';
 import '../../constants/strings.dart';
 import '../../model/user_details.dart';
 import '../../model/tournaments.dart';
+import '../../widgets/custom_app_bar.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -67,19 +68,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Flyingwolf", style: TextStyle(color: Colors.black)),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.drag_handle),
-          onPressed: (){},
-        ),
-      ),
+      appBar: CustomAppBar("Flyingwolf", leadingIcon: Icon(Icons.drag_handle),),
       body: getRoot()
     );
   }
