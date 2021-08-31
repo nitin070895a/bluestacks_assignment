@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:Bluestacks/constants/constants.dart';
 import 'package:Bluestacks/constants/strings.dart';
 import 'package:Bluestacks/persistent/preferences.dart';
@@ -34,14 +36,14 @@ class GameTV extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate
       ],
       localeResolutionCallback: (locale, supportedLocales) {
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale?.languageCode &&
-              supportedLocale.countryCode == locale?.countryCode) {
+
+        for (var supportedLocale in supportedLocales)
+          if (supportedLocale.languageCode == locale?.languageCode)
             return supportedLocale;
-          }
-        }
+
         return supportedLocales.first;
       },
+      locale: ui.window.locale,
       home: FutureBuilder(
         future: Preferences.isLoggedIn(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {

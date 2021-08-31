@@ -32,33 +32,33 @@ class LanguageEn extends Languages {
   @override String get password => 'Password';
   @override String get passwordHint => 'Enter your password';
   @override String get invalidPassword => 'Password must be between 3 to 11 characters.';
-  @override String get login => "Login";
-  @override String get loginErrorUser => "Authentication failed! Username or password is wrong";
-  @override String get eloRating => "Elo Rating";
-  @override String get tournamentsPlayed => "Tournaments played";
-  @override String get tournamentsWon => "Tournaments won";
-  @override String get winningPercentage => "Winning percentage";
-  @override String get recommendedForYou => "Recommended for you";
-  @override String get errorLoadingPage => "Error loading page";
+  @override String get login => 'Login';
+  @override String get loginErrorUser => 'Authentication failed! Username or password is wrong';
+  @override String get eloRating => 'Elo Rating';
+  @override String get tournamentsPlayed => 'Tournaments played';
+  @override String get tournamentsWon => 'Tournaments won';
+  @override String get winningPercentage => 'Winning percentage';
+  @override String get recommendedForYou => 'Recommended for you';
+  @override String get errorLoadingPage => 'Error loading page';
 }
 
 class LanguageJa extends Languages {
 
   @override String get appName => 'Bluestacks Assignment';
-  @override String get username => 'Username';
-  @override String get usernameHint => 'Enter your username';
-  @override String get invalidUsername => 'Username must be between 3 to 11 characters.';
-  @override String get password => 'Password';
-  @override String get passwordHint => 'Enter your password';
-  @override String get invalidPassword => 'Password must be between 3 to 11 characters.';
-  @override String get login => "Login";
-  @override String get loginErrorUser => "Authentication failed! Username or password is wrong";
-  @override String get eloRating => "Elo Rating";
-  @override String get tournamentsPlayed => "Tournaments played";
-  @override String get tournamentsWon => "Tournaments won";
-  @override String get winningPercentage => "Winning percentage";
-  @override String get recommendedForYou => "Recommended for you";
-  @override String get errorLoadingPage => "Error loading page";
+  @override String get username => 'ユーザー名';
+  @override String get usernameHint => 'ユーザー名を入力して下さい';
+  @override String get invalidUsername => 'ユーザー名は3〜11文字である必要があります';
+  @override String get password => 'パスワード';
+  @override String get passwordHint => 'パスワードを入力してください';
+  @override String get invalidPassword => 'パスワードは3〜11文字である必要があります。';
+  @override String get login => 'ログイン';
+  @override String get loginErrorUser => '認証に失敗しました！ユーザー名またはパスワードが間違っています';
+  @override String get eloRating => 'Elo 評価';
+  @override String get tournamentsPlayed => 'トーナメントが行われました';
+  @override String get tournamentsWon => 'トーナメントが勝ちました';
+  @override String get winningPercentage => '勝率';
+  @override String get recommendedForYou => 'あなたにおすすめ';
+  @override String get errorLoadingPage => 'ページの読み込みエラー';
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Languages> {

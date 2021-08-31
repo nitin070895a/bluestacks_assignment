@@ -264,7 +264,7 @@ class _TournamentWidget extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          SizedBox(height: 8,),
+                          SizedBox(height: 5,),
                           Text(tournament.gameName ?? "")
                         ],
                       ),
