@@ -1,5 +1,7 @@
 
 import 'package:Bluestacks/constants/constants.dart';
+import 'package:Bluestacks/constants/strings.dart';
+import 'package:Bluestacks/model/user_details.dart';
 
 import '../controller/home_controller.dart';
 import '../model/tournaments.dart';
@@ -36,23 +38,140 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Languages strings = Languages.of(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text("Flyingwolf", style: TextStyle(color: Colors.black)),
         elevation: 0,
         backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.drag_handle),
+          onPressed: (){},
+        ),
       ),
       body: ListView.builder(
           // reverse: true,
-          itemCount: _controller.tournaments.length,
+          itemCount: _controller.tournaments.length + 2,
           itemBuilder: (context, index) {
-            return _TournamentWidget(_controller.tournaments[index]);
+            if (index == 0) return _UserDetails(_controller.userDetails);
+            if (index == 1) return Container(
+              margin: EdgeInsets.only(left: Dimensions.card_margin, right: Dimensions.card_margin),
+              child: Text(
+                strings.recommendedForYou,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Dimensions.font_xxlarge,
+                ),
+              ),
+            );
+            return _TournamentWidget(_controller.tournaments[index-2]);
           }
       ),
     );
   }
 
+}
+
+class _UserDetails extends StatelessWidget {
+
+  final UserDetails? userDetails;
+
+  _UserDetails(this.userDetails);
+
+  @override
+  Widget build(BuildContext context) {
+    Languages strings = Languages.of(context);
+    Radius r = Radius.circular(25);
+    return Container(
+      margin: EdgeInsets.all(Dimensions.card_margin),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage(Images.logo),
+              ),
+              SizedBox(width: Dimensions.card_margin,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(userDetails?.name ?? "", style: Theme.of(context).textTheme.headline4,),
+                  SizedBox(height: 10,),
+                  Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blue, width: 2),
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                      ),
+                      padding: EdgeInsets.all(Dimensions.card_padding * 2),
+                      child: Text.rich(
+                        TextSpan(
+                            children: [
+                              TextSpan(text: userDetails?.ratings.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.font_xlarge, color: Colors.blue)),
+                              TextSpan(text: "  "),
+                              TextSpan(text: strings.eloRating)
+                            ]
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                  )
+                ],
+              )
+            ],
+          ),
+          SizedBox(height: Dimensions.card_margin,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(flex: 1, child: _ScoreCard(userDetails?.tournamentsPlayed.toString() ?? "", strings.tournamentsPlayed, BorderRadius.only(topLeft: r, bottomLeft: r), Colors.orange)),
+              Expanded(flex: 1, child: _ScoreCard(userDetails?.tournamentsWon.toString() ?? "", strings.tournamentsPlayed, BorderRadius.zero, Colors.purple)),
+              Expanded(flex: 1, child: _ScoreCard("${userDetails?.winPercentage.toInt() ?? 0}%", strings.tournamentsPlayed, BorderRadius.only(topRight: r, bottomRight: r), Colors.red)),
+            ],
+          )
+        ],
+      )
+    );
+  }
+
+}
+
+class _ScoreCard extends StatelessWidget {
+
+  final String value;
+  final String title;
+  final BorderRadius radius;
+  final MaterialColor color;
+
+  _ScoreCard(this.value, this.title, this.radius, this.color);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20),
+      margin: EdgeInsets.all(1),
+      decoration: BoxDecoration(
+        borderRadius: radius,
+        gradient: LinearGradient(
+          colors: [color.shade800, color.shade400,],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight,
+        )
+      ),
+      child: Center(
+        child: Column(
+          children: [
+            Text(value, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: Dimensions.font_xlarge),),
+            SizedBox(height: 5,),
+            Text(title, style: TextStyle(color: Colors.white,), textAlign: TextAlign.center, ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _TournamentWidget extends StatelessWidget {
@@ -99,7 +218,7 @@ class _TournamentWidget extends StatelessWidget {
                         children: [
                           Text(
                             tournament.name ?? "",
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: Dimensions.font_large, fontWeight: FontWeight.bold),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),

@@ -15,6 +15,11 @@ abstract class Languages {
   String get invalidPassword;
   String get login;
   String get loginErrorUser;
+  String get eloRating;
+  String get tournamentsPlayed;
+  String get tournamentsWon;
+  String get winningPercentage;
+  String get recommendedForYou;
 }
 
 class LanguageEn extends Languages {
@@ -28,6 +33,11 @@ class LanguageEn extends Languages {
   @override String get invalidPassword => 'Password must be between 3 to 11 characters.';
   @override String get login => "Login";
   @override String get loginErrorUser => "Authentication failed! Username or password is wrong";
+  @override String get eloRating => "Elo Rating";
+  @override String get tournamentsPlayed => "Tournaments played";
+  @override String get tournamentsWon => "Tournaments won";
+  @override String get winningPercentage => "Winning percentage";
+  @override String get recommendedForYou => "Recommended for you";
 }
 
 class LanguageJa extends Languages {
@@ -41,6 +51,11 @@ class LanguageJa extends Languages {
   @override String get invalidPassword => 'Password must be between 3 to 11 characters.';
   @override String get login => "Login";
   @override String get loginErrorUser => "Authentication failed! Username or password is wrong";
+  @override String get eloRating => "Elo Rating";
+  @override String get tournamentsPlayed => "Tournaments played";
+  @override String get tournamentsWon => "Tournaments won";
+  @override String get winningPercentage => "Winning percentage";
+  @override String get recommendedForYou => "Recommended for you";
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Languages> {

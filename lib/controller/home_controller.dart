@@ -8,11 +8,14 @@ class HomeController {
   String? _cursor;
   bool _deadEnd = false;
   List<Tournament> _tournaments = [];
+  UserDetails? _userDetails;
 
   List<Tournament> get tournaments => _tournaments;
+  UserDetails? get userDetails => _userDetails;
 
   Future<UserDetails?> getUserDetails() async {
-    return await APIService.getUserDetails();
+    _userDetails = await APIService.getUserDetails();
+    return _userDetails;
   }
 
   Future<List<Tournament>> getRecommendedTournaments() async {

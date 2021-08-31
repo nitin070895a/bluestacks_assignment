@@ -25,6 +25,12 @@ class Dimensions {
   static const card_elevation = 2.0;
   static const card_margin = 18.0;
   static const card_padding = 5.0;
+
+  static const font_small = 12.0;
+  static const font_normal = 14.0;
+  static const font_large = 16.0;
+  static const font_xlarge = 20.0;
+  static const font_xxlarge = 26.0;
 }
 
 class Routes {
