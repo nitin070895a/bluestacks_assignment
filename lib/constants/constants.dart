@@ -14,7 +14,6 @@ class Images {
 /// All the custom colors user in the app
 class AppColors {
 
-  static const white = const Color(0xffffffff);
   static const background = const Color(0xfff9f9f9);
 }
 

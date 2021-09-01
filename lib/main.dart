@@ -47,9 +47,14 @@ class _GameTV extends StatelessWidget {
   /// Returns customised app theme data
   ThemeData _getTheme() {
     return ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        scaffoldBackgroundColor: AppColors.background
+      primarySwatch: Colors.blue,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      scaffoldBackgroundColor: AppColors.background,
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Dimensions.text_field_round_radius)
+        )
+      )
     );
   }
 }

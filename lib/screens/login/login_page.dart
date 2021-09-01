@@ -29,60 +29,51 @@ class _LoginPageState extends State<LoginPage> {
 
   UIState _loginState = UIState.IDLE; // Current UI state of the page
   var _isFormValid = false;
+  late Languages strings;
 
   @override
   Widget build(BuildContext context) {
-    Languages strings = Languages.of(context);
+    strings = Languages.of(context);
+
     return Scaffold(
         appBar: CustomAppBar(strings.login),
         resizeToAvoidBottomInset: true,
         body: Form(
             key: _formKey,
-            onChanged: (){
-              setState(() {
-                _isFormValid = _formKey.currentState?.validate() ?? false;
-              });
-            },
+            onChanged: _onFormEdit,
             child: Center(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.all(Dimensions.login_form_margin),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Image(image: AssetImage(Images.logo), width: 100, height: 100,),
+                      Image(
+                        image: AssetImage(Images.logo), width: 100, height: 100,
+                      ),
                       SizedBox(height: Dimensions.login_form_spacing,),
                       TextFormField(
                         controller: _userName,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: _usernameValidation,
                         decoration: InputDecoration(
-                            hintText: strings.usernameHint,
-                            labelText: strings.username,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(Dimensions.text_field_round_radius)
-                            )
+                          hintText: strings.usernameHint,
+                          labelText: strings.username,
                         ),
-                        validator: (text) => (text?.isEmpty ?? true) ? "" : text?.isValidUsername() ?? true ? null : strings.invalidUsername,
                       ),
                       SizedBox(height: Dimensions.login_form_spacing,),
                       TextFormField(
                         controller: _password,
+                        obscureText: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: _passwordValidation,
                         decoration: InputDecoration(
                           hintText: strings.passwordHint,
                           labelText: strings.password,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(Dimensions.text_field_round_radius)
-                          ),
                         ),
-                        validator: (text) => (text?.isEmpty ?? true) ? "" : text?.isValidPassword() ?? true ? null : strings.invalidPassword,
-                        obscureText: true,
                       ),
                       SizedBox(height: Dimensions.login_form_spacing,),
-                      OutlinedButton(
-                        child: Text(strings.login),
-                        onPressed: (_isFormValid && _loginState != UIState.LOADING)? onLoginPressed : null,
-                      ),
-                      Text(_loginState == UIState.ERROR ? strings.loginErrorUser : "", style: TextStyle(color: Colors.red),textAlign: TextAlign.center,),
+                      _getLoginButton(),
+                      _getErrorText()
                     ],
                   ),
                 )
@@ -91,8 +82,39 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // Returns UI widget for login button
+  Widget _getLoginButton() =>
+    OutlinedButton(
+      child: Text(strings.login),
+      onPressed: (_isFormValid && _loginState != UIState.LOADING)?
+        _onLoginPressed : null,
+    );
+
+  /// Returns UI widget for error text
+  Widget _getErrorText() => Text(
+    _loginState == UIState.ERROR ? strings.loginErrorUser : "",
+    style: TextStyle(color: Colors.red),
+    textAlign: TextAlign.center,
+  );
+
+  /// Validates user name and returns a corresponding error string
+  String? _usernameValidation(String? text) => (text?.isEmpty ?? true) ? ""
+      : text?.isValidUsername() ?? true ? null : strings.invalidUsername;
+
+  /// Validates password and returns a corresponding error string
+  String? _passwordValidation(String? text) => (text?.isEmpty ?? true) ? ""
+      : text?.isValidPassword() ?? true ? null : strings.invalidPassword;
+
+  /// Form edit callback
+  void _onFormEdit() {
+
+    setState(() {
+      _isFormValid = _formKey.currentState?.validate() ?? false;
+    });
+  }
+
   /// Callback from Login button click, Calls the controller for login event
-  void onLoginPressed() async {
+  void _onLoginPressed() async {
 
     FocusManager.instance.primaryFocus?.unfocus();
 
