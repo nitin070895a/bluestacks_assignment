@@ -63,6 +63,11 @@ class _GameTV extends StatelessWidget {
         )
       ),
       textTheme: TextTheme(
+        headline1: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: Dimensions.font_xxlarge,
+          color: Colors.black87
+        ),
         headline2: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: Dimensions.font_xlarge,
@@ -88,7 +93,7 @@ class _GameTV extends StatelessWidget {
       ),
       iconTheme: IconThemeData(
         color: Colors.black87
-      )
+      ),
     );
   }
 }
