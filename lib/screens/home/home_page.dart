@@ -66,8 +66,8 @@ class _HomePageState extends State<HomePage> {
   void _scrollListener() {
 
     // Check if reached end of list
-    if (_scrollController.offset >= _scrollController.position.maxScrollExtent &&
-        !_scrollController.position.outOfRange && !_isFetchingMore) {
+    if (_scrollController.offset >= _scrollController.position.maxScrollExtent
+        && !_scrollController.position.outOfRange && !_isFetchingMore) {
 
       // Call api again to fetch next page
       _isFetchingMore = true;
@@ -84,7 +84,9 @@ class _HomePageState extends State<HomePage> {
     strings = Languages.of(context);
 
     return Scaffold(
-      appBar: CustomAppBar("Flyingwolf", leadingIcon: Icon(Icons.drag_handle),),
+      appBar: CustomAppBar("Flyingwolf",
+        leadingIcon: Icon(Icons.drag_handle),
+      ),
       body: _getRoot()
     );
   }
@@ -112,11 +114,11 @@ class _HomePageState extends State<HomePage> {
       itemCount: _controller.tournaments.length + 3, // 1 for header, title and progress each
       itemBuilder: (context, index) {
 
-        if (index == 0) return UserWidget(_controller.userDetails);
-        if (index == 1) return CustomHeader(strings.recommendedForYou);
+        if (index == 0) return UserWidget(_controller.userDetails); // Profile
+        if (index == 1) return CustomHeader(strings.recommendedForYou); // Title
         if (index == _controller.tournaments.length + 2) {
           if (_controller.deadEnd) return Container();
-          else return Align(child: CircularProgressIndicator());
+          else return Align(child: CircularProgressIndicator()); // Progress
         }
 
         // Return Tournament Widget
