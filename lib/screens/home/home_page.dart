@@ -7,9 +7,11 @@ import '../../constants/constants.dart';
 import '../../utils/enum.dart';
 import '../../constants/strings.dart';
 import '../../model/user_details.dart';
-import '../../model/tournaments.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/score_card.dart';
+import '../../widgets/tournament.dart';
 
+// Provides the UI for Home Page
 class HomePage extends StatefulWidget {
 
   @override
@@ -17,28 +19,31 @@ class HomePage extends StatefulWidget {
 
 }
 
+// Home Page State
 class _HomePageState extends State<HomePage> {
 
-  HomeController _controller = HomeController();
-  UIState _state = UIState.IDLE;
-  ScrollController _scrollController = ScrollController();
-  bool _isFetchingMore = false;
+  HomeController _controller = HomeController(); // The Controller
+
+  ScrollController _scrollController = ScrollController(); // List controller
+
+  UIState _state = UIState.IDLE; // Current UI state
+  bool _isFetchingMore = false;  // Flag to indicate pagination progress
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_scrollListener);
 
-    callAPIs();
+    _callAPIs();
   }
 
-  void callAPIs() async {
+  void _callAPIs() async {
 
     setState(() {
       _state = UIState.LOADING;
     });
 
-    await callTournamentsAPI();
+    await _callTournamentsAPI();
     await _controller.getUserDetails();
 
     setState(() {
@@ -46,7 +51,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<void> callTournamentsAPI() async {
+  Future<void> _callTournamentsAPI() async {
     await _controller.getRecommendedTournaments();
     _isFetchingMore = false;
   }
@@ -57,7 +62,7 @@ class _HomePageState extends State<HomePage> {
         !_scrollController.position.outOfRange && !_isFetchingMore) {
 
       _isFetchingMore = true;
-      callTournamentsAPI().then((value) =>
+      _callTournamentsAPI().then((value) =>
           setState(() {
 
           })
@@ -84,7 +89,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Text(strings.errorLoadingPage, style: TextStyle(color: Colors.red),),
           SizedBox(height: Dimensions.card_margin,),
-          OutlinedButton(onPressed: callAPIs, child: Text(strings.retry),)
+          OutlinedButton(onPressed: _callAPIs, child: Text(strings.retry),)
         ],
       ));
       case UIState.LOADED: return ListView.builder(
@@ -107,7 +112,7 @@ class _HomePageState extends State<HomePage> {
               if (_controller.deadEnd) return Container();
               else return Align(child: CircularProgressIndicator());
             }
-            return _TournamentWidget(_controller.tournaments[index-2]);
+            return TournamentWidget(_controller.tournaments[index-2]);
           }
       );
 
@@ -167,111 +172,10 @@ class _UserDetails extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Expanded(flex: 1, child: _ScoreCard(userDetails?.tournamentsPlayed.toString() ?? "", strings.tournamentsPlayed, BorderRadius.only(topLeft: r, bottomLeft: r), Colors.orange)),
-              Expanded(flex: 1, child: _ScoreCard(userDetails?.tournamentsWon.toString() ?? "", strings.tournamentsWon, BorderRadius.zero, Colors.purple)),
-              Expanded(flex: 1, child: _ScoreCard("${userDetails?.winPercentage.toInt() ?? 0}%", strings.winningPercentage, BorderRadius.only(topRight: r, bottomRight: r), Colors.red)),
+              Expanded(flex: 1, child: ScoreCard(userDetails?.tournamentsPlayed.toString() ?? "", strings.tournamentsPlayed, BorderRadius.only(topLeft: r, bottomLeft: r), Colors.orange)),
+              Expanded(flex: 1, child: ScoreCard(userDetails?.tournamentsWon.toString() ?? "", strings.tournamentsWon, BorderRadius.zero, Colors.purple)),
+              Expanded(flex: 1, child: ScoreCard("${userDetails?.winPercentage.toInt() ?? 0}%", strings.winningPercentage, BorderRadius.only(topRight: r, bottomRight: r), Colors.red)),
             ],
-          )
-        ],
-      )
-    );
-  }
-
-}
-
-class _ScoreCard extends StatelessWidget {
-
-  final String value;
-  final String title;
-  final BorderRadius radius;
-  final MaterialColor color;
-
-  _ScoreCard(this.value, this.title, this.radius, this.color);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15),
-      margin: EdgeInsets.all(1),
-      decoration: BoxDecoration(
-        borderRadius: radius,
-        gradient: LinearGradient(
-          colors: [color.shade800, color.shade400,],
-          begin: Alignment.bottomLeft,
-          end: Alignment.topRight,
-        )
-      ),
-      child: Center(
-        child: Column(
-          children: [
-            Text(value, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: Dimensions.font_xlarge),),
-            SizedBox(height: 5,),
-            Text(title, style: TextStyle(color: Colors.white,), textAlign: TextAlign.center, ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _TournamentWidget extends StatelessWidget {
-
-  final Tournament tournament;
-
-  _TournamentWidget(this.tournament);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      semanticContainer: true,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      elevation: Dimensions.card_elevation,
-      shadowColor: Colors.black38,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Dimensions.card_round_radius)
-      ),
-      margin: EdgeInsets.fromLTRB(Dimensions.card_margin, Dimensions.card_margin, Dimensions.card_margin, 2),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            foregroundDecoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.black54, Colors.transparent,],
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-              )
-            ),
-            child: Image.network(tournament.coverUrl ?? "", fit: BoxFit.cover, height: 90,),
-          ),
-          Padding(
-            padding: EdgeInsets.all(Dimensions.card_padding * 2),
-            child: Container(
-                color: Colors.white,
-                height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            tournament.name ?? "",
-                            style: TextStyle(fontSize: Dimensions.font_large, fontWeight: FontWeight.bold),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(height: 5,),
-                          Text(tournament.gameName ?? "")
-                        ],
-                      ),
-                    ),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.keyboard_arrow_right, color: Colors.black87,))
-                  ],
-                )
-            )
           )
         ],
       )

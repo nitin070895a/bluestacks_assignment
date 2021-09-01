@@ -61,6 +61,33 @@ class _GameTV extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(Dimensions.text_field_round_radius)
         )
+      ),
+      textTheme: TextTheme(
+        headline2: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: Dimensions.font_xlarge,
+        ),
+        headline6: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: Dimensions.font_large,
+        ),
+        bodyText2: TextStyle(
+          fontSize: Dimensions.font_normal
+        ),
+      ),
+      cardTheme: CardTheme(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        elevation: Dimensions.card_elevation,
+        shadowColor: Colors.black38,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Dimensions.card_round_radius)
+        ),
+        margin: EdgeInsets.fromLTRB(Dimensions.card_margin,
+            Dimensions.card_margin, Dimensions.card_margin, 2
+        ),
+      ),
+      iconTheme: IconThemeData(
+        color: Colors.black87
       )
     );
   }
