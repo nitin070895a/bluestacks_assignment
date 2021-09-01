@@ -16,4 +16,13 @@ class UserDetails {
     this.tournamentsPlayed = json["tournaments_played"];
     this.tournamentsWon = json["tournaments_won"];
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['ratings'] = this.ratings;
+    data['tournaments_played'] = this.tournamentsPlayed;
+    data['tournaments_won'] = this.tournamentsWon;
+    return data;
+  }
 }

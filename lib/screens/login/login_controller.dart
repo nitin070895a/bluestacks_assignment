@@ -9,6 +9,8 @@ class LoginController {
 
   /// Authenticates a user with [params], returns true if authenticated
   Future<bool> login(AuthParams params) async{
+    print('Sending Login Request...');
+
     var success = await LoginService.login(params);
     if (success) Preferences.setLoggedIn(true);
 
