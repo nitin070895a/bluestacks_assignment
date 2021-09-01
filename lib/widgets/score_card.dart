@@ -19,8 +19,9 @@ class ScoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(1),
+      height: 90,
       decoration: BoxDecoration(
         borderRadius: radius,
         gradient: LinearGradient(
@@ -31,6 +32,7 @@ class ScoreCard extends StatelessWidget {
       ),
       child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(value, style: Theme.of(context).textTheme.headline2?.apply(
               color: Colors.white
