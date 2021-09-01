@@ -9,13 +9,15 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Icon? leadingIcon;
 
   /// Creates the app bar with [title] and optional [leadingIcon]
-  CustomAppBar(this.title, {this.leadingIcon}): preferredSize = Size.fromHeight(kToolbarHeight);
+  CustomAppBar(this.title, {this.leadingIcon}):
+        preferredSize = Size.fromHeight(kToolbarHeight);
 
   @override
   final Size preferredSize;
 
   @override
-  State<StatefulWidget> createState() => _CustomAppBarState(title, leadingIcon: leadingIcon);
+  State<StatefulWidget> createState() =>
+      _CustomAppBarState(title, leadingIcon: leadingIcon);
 
 }
 

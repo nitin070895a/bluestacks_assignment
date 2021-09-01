@@ -15,7 +15,7 @@ class LoginService {
 
   /// Sends an authentication request for provided [params]
   ///
-  /// Note: Mockup, Waits for 1 second and returns result based on validation
+  /// Note: Mock-up, Waits for 1 second and returns result based on validation
   static Future<bool> login(AuthParams params) {
     if (_validLoginCredentials == null) _initialise();
 

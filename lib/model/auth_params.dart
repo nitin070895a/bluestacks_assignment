@@ -1,5 +1,5 @@
 
-/// Authentication params to be send for loggin in
+/// Authentication params to be send for logging in
 class AuthParams {
 
   final String userName;

@@ -10,11 +10,13 @@ import '../model/user_details.dart';
 /// Central service providing all APIs to be used in the app
 class APIService {
 
-  /// Fetches the recommended tournaments from the server and returns the response
+  /// Fetches recommended tournaments from the server and returns the response
   ///
   /// The API supports pagination, provide an optional [cursor] to be passed to
   /// the server as a starting point in the data
-  static Future<TournamentsResponse?> getRecommendedTournaments({String? cursor}) async {
+  static Future<TournamentsResponse?> getRecommendedTournaments(
+      {String? cursor}) async {
+
     if (await _isConnected() == false) return null;
 
     // Prepare URI
@@ -32,7 +34,7 @@ class APIService {
 
   /// Fetches users profile from the server and returns it
   ///
-  /// Note: Mockup, Waits for 1 second and returns hardcoded response
+  /// Note: Mock-up, Waits for 1 second and returns hardcoded response
   static Future <UserDetails?> getUserDetails() async {
     if (await _isConnected() == false) return null;
 
@@ -51,6 +53,7 @@ class APIService {
   /// Checks for internet connectivity, returns true if network is connected
   static Future<bool> _isConnected() async {
     var connectivityResult = await new Connectivity().checkConnectivity();
-    return connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi;
+    return connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi;
   }
 }

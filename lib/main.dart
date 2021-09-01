@@ -22,11 +22,16 @@ class _GameTV extends StatelessWidget {
     return MaterialApp(
       title: 'Bluestacks Assignment',
       theme: _getTheme(),
+      debugShowCheckedModeBanner: false,
       supportedLocales: [Locale('en', ''), Locale('ja', ''),],
-      localizationsDelegates: [AppLocalizationDelegate(), GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
+      localizationsDelegates: [
+        AppLocalizationDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate
+      ],
       localeResolutionCallback: _localeResolutionCallback,
       locale: ui.window.locale,
-      debugShowCheckedModeBanner: false,
       home: _HomeWidget(),
       routes: {
         Routes.login : (context) => LoginPage(),
@@ -36,7 +41,9 @@ class _GameTV extends StatelessWidget {
   }
 
   /// Callback to handle locale resolution
-  Locale _localeResolutionCallback(Locale? locale, Iterable<Locale> supportedLocales) {
+  Locale _localeResolutionCallback(
+      Locale? locale, Iterable<Locale> supportedLocales) {
+
     for (var supportedLocale in supportedLocales)
       if (supportedLocale.languageCode == locale?.languageCode)
         return supportedLocale;
